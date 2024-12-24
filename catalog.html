@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e9ecef; /* Light grey background */
+        }
+        .catalog-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+        }
+        .product {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            width: calc(25% - 20px); /* 4 items per row with gap */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background-color: #ffffff; /* White background for the catalog box */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .product img:hover {
+            transform: scale(1.05);
+        }
+        .product .name {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .product .rating {
+            font-size: 1em;
+            color: #FFD700; /* Yellow color for stars */
+            margin: 5px 0;
+        }
+        .product .price-container {
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: #007bff;
+        }
+        .product .price-container .old-price {
+            display: block;
+            text-decoration: line-through;
+            color: #dc3545; /* Red color for old price */
+            font-size: 1em;
+        }
+        .product .price-container .new-price {
+            display: block;
+            color: #007bff; /* Blue color for new price */
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .product .sale {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #dc3545; /* Red background */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .product .new {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #28a745; /* Green background */
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+        .product .buy-now {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #28a745; /* Green background */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .product .buy-now:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+        .load-more {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #007bff; /* Blue background */
+            color: white;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s ease;
+        }
+        .load-more:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="catalog" class="catalog-container">
+        <!-- Products will be injected here by JavaScript -->
+    </div>
+    <div id="loadMore" class="load-more hidden">Load More</div>
+
+    <script>
+        const products = [
+            { id: 1, name: 'Product 1', image: 'https://via.placeholder.com/250', price: '$19.99', rating: '4.5', link: '#', sale: true, oldPrice: '$29.99' },
+            { id: 2, name: 'Product 2', image: 'https://via.placeholder.com/250', price: '$29.99', rating: '4.2', link: '#', new: true },
+            { id: 3, name: 'Product 3', image: 'https://via.placeholder.com/250', price: '$39.99', rating: '4.7', link: '#' },
+            { id: 4, name: 'Product 4', image: 'https://via.placeholder.com/250', price: '$49.99', rating: '4.8', link: '#' },
+            { id: 5, name: 'Product 5', image: 'https://via.placeholder.com/250', price: '$59.99', rating: '4.3', link: '#' , sale: true, oldPrice: '$29.99'},
+            { id: 6, name: 'Product 6', image: 'https://via.placeholder.com/250', price: '$69.99', rating: '4.6', link: '#', new: true },
+            { id: 7, name: 'Product 7', image: 'https://via.placeholder.com/250', price: '$79.99', rating: '4.4', link: '#' },
+            { id: 8, name: 'Product 8', image: 'https://via.placeholder.com/250', price: '$89.99', rating: '4.7', link: '#' },
+            { id: 9, name: 'Product 9', image: 'https://via.placeholder.com/250', price: '$99.99', rating: '4.6', link: '#', new: true },
+            { id: 10, name: 'Product 10', image: 'https://via.placeholder.com/250', price: '$109.99', rating: '4.5', link: '#' },
+            { id: 11, name: 'Product 11', image: 'https://via.placeholder.com/250', price: '$119.99', rating: '4.3', link: '#', sale: true , oldPrice: '$29.99'},
+            { id: 12, name: 'Product 12', image: 'https://via.placeholder.com/250', price: '$129.99', rating: '4.8', link: '#', new: true }
+        ];
+
+        function getStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 !== 0;
+            const starHTML = '★'.repeat(fullStars) + (halfStar ? '✩' : '') + '☆'.repeat(5 - fullStars - (halfStar ? 1 : 0));
+            return starHTML;
+        }
+
+        let currentIndex = 0;
+        const productsPerPage = 5;
+
+        function renderProducts() {
+            const catalog = document.getElementById('catalog');
+            const end = Math.min(currentIndex + productsPerPage, products.length);
+
+            for (let i = currentIndex; i < end; i++) {
+                const product = products[i];
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+
+                let saleTag = '';
+                let newTag = '';
+                let priceHTML = '';
+
+                if (product.sale) {
+                    saleTag = '<div class="sale">Sale</div>';
+                    priceHTML = `
+                        <div class="price-container">
+                            <span class="old-price">${product.oldPrice}</span>
+                            <span class="new-price">${product.price}</span>
+                        </div>
+                    `;
+                } else {
+                    priceHTML = `<div class="price-container"><span class="new-price">${product.price}</span></div>`;
+                }
+
+                if (product.new) {
+                    newTag = '<div class="new">New</div>';
+                }
+
+                productDiv.innerHTML = `
+                    ${saleTag}
+                    ${newTag}
+                    <a href="${product.link}" target="_blank">
+                        <img src="${product.image}" alt="${product.name}">
+                    </a>
+                    <h3 class="name">${product.name}</h3>
+                    <div class="rating">${getStars(product.rating)}</div>
+                    ${priceHTML}
+                    <a href="${product.link}" class="buy-now" target="_blank">Add to Cart</a>
+                `;
+                catalog.appendChild(productDiv);
+            }
+
+            currentIndex = end;
+            if (currentIndex >= products.length) {
+                document.getElementById('loadMore').classList.add('hidden');
+            } else {
+                document.getElementById('loadMore').classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('loadMore').addEventListener('click', function() {
+            renderProducts();
+        });
+
+        // Initial render
+        renderProducts();
+    </script>
+</body>
+</html>

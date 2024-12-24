@@ -1,0 +1,298 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Color variables */
+:root {
+    --dark-brown: #3E362E;
+    --medium-brown: #865D36;
+    --light-brown: #93785B;
+    --sand: #AC8968;
+    --pale: #A69080;
+    --background-color: #EDEDED;
+}
+
+/* General body styling */
+body {
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: var(--dark-brown);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+header .logo h1 {
+    font-size: 24px;
+    color: var(--sand);
+    margin-right: auto;
+}
+
+/* Adjust logo image size */
+.logo-img {
+    width: 100px; /* Adjust width as per your logo's aspect ratio */
+    height: 47px;
+}
+
+/* Style the account boxes for Login, Register, Cart */
+.account-actions ul {
+    display: flex;
+}
+
+.account-actions .box {
+    background-color: var(--medium-brown); /* Matching the theme */
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.account-actions .box a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.account-actions .box:hover {
+    background-color: var(--dark-brown); /* Darken on hover */
+}
+
+/* Search Bar aligned right of the logo */
+.search-bar {
+    margin-left: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    padding: 5px;
+    border: 1px solid var(--light-brown);
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.search-bar button {
+    padding: 6px 10px;
+    background-color: var(--medium-brown);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+/* Navigation for Login, Register, Cart */
+nav ul {
+    list-style-type: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Button to open sidebar */
+.open-sidebar-btn {
+    background-color: var(--medium-brown);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Side Navigation */
+.side-nav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: var(--dark-brown);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 5px;
+    z-index: 500;
+    margin-top: 6%;
+}
+
+.side-nav a {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.side-nav a:hover {
+    background-color: var(--medium-brown);
+    padding-left: 30px;
+}
+
+/* Dropdown for categories */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--dark-brown);
+    margin-left: 20px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    color: white;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Slider */
+.slider {
+    width: 100%;
+    height: 600px; /* Fixed height for visual consistency */
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.slides {
+    display: flex;
+    width: 300%;
+    animation: slide-animation 12s infinite;
+}
+
+.slide {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Keyframes for slider animation */
+@keyframes slide-animation {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(-100%); }
+    66% { transform: translateX(-200%); }
+    100% { transform: translateX(0); }
+}
+
+/* Offers */
+.offers {
+    padding: 20px;
+    background-color: var(--sand);
+    text-align: center;
+}
+
+.offer-item {
+    margin: 10px 0;
+    background-color: var(--light-brown);
+    padding: 15px;
+    border-radius: 8px;
+    color: rgb(2, 0, 0);
+}
+
+.offer-images {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Space between images */
+}
+
+.offer-img-container {
+    text-align: center;
+}
+
+.offer-img {
+    width: 200px; /* Fixed width for consistent size */
+    height: 200px; /* Fixed height for consistent size */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.add-to-cart {
+    background-color: var(--medium-brown);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.add-to-cart:hover {
+    background-color: var(--dark-brown);
+}
+
+/* Info Section (About Us & Contact Us) */
+.info-section {
+    padding: 20px;
+    background-color: var(--background-color);
+    text-align: center;
+    color: var(--dark-brown);
+}
+
+.social-media {
+    margin-top: 20px;
+}
+
+.social-media a {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: 1px solid var(--medium-brown);
+    border-radius: 4px;
+    color: var(--medium-brown);
+    text-decoration: none;
+}
+
+.social-media a:hover {
+    background-color: var(--medium-brown);
+    color: white;
+}
+
+/* Footer */
+footer {
+    background-color: var(--dark-brown);
+    color: var(--pale);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-content {
+    margin-bottom: 10px;
+}
+
+
